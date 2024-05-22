@@ -1,0 +1,105 @@
+{
+  "id": 1,
+  "name": "Tifa Lockhart",
+  "age": "20",
+  "height": 1.67,
+  "weight": "52.16",
+  "nickname": "Tifa",
+  "online": true,
+  "inTeam": "true",
+  "leader": "false",
+  "fullLevel": false,
+  "level": 999,
+  "skills": ["hand-to-hand combat", "martial arts", "limit break"],
+  "summon": [
+    ["Chocobo", "Shiva"],
+    ["Ifrit", "Ramuh", "Titan", "Odin"],
+    ["Leviathan", "Bahamut"]
+  ],
+  "friends": [
+    {
+      "id": 2,
+      "name": "Cloud Strife",
+      "relationship": 2,
+      "friends": [
+        {
+          "id": 1,
+          "name": "Tifa Lockhart",
+          "relationship": 2
+        },
+        {
+          "id": 3,
+          "name": "Barret Wallace",
+          "relationship": 1
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Barret Wallace",
+      "relationship": 1,
+      "friends": [
+        {
+          "id": 1,
+          "name": "Tifa Lockhart",
+          "relationship": 1
+        },
+        {
+          "id": 2,
+          "name": "Cloud Strife",
+          "relationship": 1
+        }
+      ]
+    }
+  ],
+  "limitBreak": {
+    "effect": "   Deals heavy damage to all enemies   ",
+    "levels": [
+      { "level": 1, "name": "Beat Rush", "damage": 100 },
+      { "level": 2, "name": "Somersault", "damage": 200 },
+      { "level": 3, "name": "Waterkick", "damage": 300 },
+      { "level": 4, "name": "Meteodrive", "damage": 400 },
+      { "level": 5, "name": "Dolphin Blow", "damage": 500 },
+      { "level": 6, "name": "Meteor Strike", "damage": 600 },
+      { "level": 7, "name": "Final Heaven", "damage": 700 }
+    ]
+  },
+  "equipment": {
+    "weapon": {
+      "name": "Leather Gloves",
+      "attack": 10
+    },
+    "armor": {
+      "name": "Leather Vest",
+      "defense": 10
+    },
+    "accessory": {
+      "name": "Protective Boots",
+      "defense": 5,
+      "effect": "Prevents poison"
+    }
+  },
+  "birthday": "1987-05-03T07:00:00.000Z",
+  "registered": 547023600000,
+  "addresses": [
+    {
+      "street": "7th Heaven",
+      "city": "Midgar",
+      "zip": "12345"
+    },
+    {
+      "city": "Nibelheim"
+    }
+  ],
+  "magic": {
+    "fire": 3,
+    "ice": 3,
+    "lightning": 3,
+    "earth": 3,
+    "wind": 3,
+    "water": 3,
+    "poison": 3,
+    "gravity": 3,
+    "holy": 3
+  }
+}

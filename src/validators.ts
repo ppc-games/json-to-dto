@@ -29,7 +29,7 @@ export function NewValidatorMinMax(min: number, max: number): PropValidator {
  * Attention: It does not support string type enum values,
  * because the string type enum will not generate fields indexed by value after being compiled into js.
  */
-export function NewValidatorEnumValueExist(enumDefine: { [key: string]: string | number }): PropValidator {
+export function NewValidatorEnumValueExist(enumDefine: { [key: string]: number | string }): PropValidator {
   return (val, name) =>
     enumDefine[val] != undefined
       ? undefined

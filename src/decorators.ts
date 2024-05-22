@@ -22,7 +22,7 @@ export function Class(): ClassDecorator {
     // because the child class overrides the same property registered by the parent class.
     const parentMetadataMap = classTypeToPropMetadata.get(parentCtor);
     if (parentMetadataMap) {
-      const currentMetadata = getOrCreateMetadataMap(clsCtor);
+      const currentMetadata = getOrCreateMetadataMap(clsCtor as any as ClassType);
       for (const parentMetadata of parentMetadataMap.values()) {
         if (currentMetadata.has(parentMetadata.name) === false) {
           currentMetadata.set(parentMetadata.name, parentMetadata);
@@ -36,7 +36,7 @@ export function Class(): ClassDecorator {
     // then give up the same property validator registered by the parent class.
     const parentValidatorMap = classTypeToPropValidator.get(parentCtor);
     if (parentValidatorMap) {
-      const propNameToValidators = getOrCreateValidatorMap(clsCtor);
+      const propNameToValidators = getOrCreateValidatorMap(clsCtor as any as ClassType);
       for (const [propName, parentValidators] of parentValidatorMap) {
         if (propNameToValidators.has(propName) === false) {
           propNameToValidators.set(propName, parentValidators);
@@ -45,7 +45,7 @@ export function Class(): ClassDecorator {
     }
 
     // register the current class constructor to the classSet
-    classSet.add(clsCtor);
+    classSet.add(clsCtor as any as ClassType);
     // console.log(`${clsCtor.name}`);
 
     // Explanation about not using recursion when registering parent class properties:
@@ -95,7 +95,7 @@ export function Prop(options: {
     // register the current property metadata,
     // Attention: even if the metadata already exists for the same property name,
     // it will be forcibly overridden, because the same property name of the subclass will override the same property name of the parent class.
-    const clsCtor: ClassType = obj.constructor;
+    const clsCtor = obj.constructor as ClassType;
     getOrCreateMetadataMap(clsCtor).set(currentMetadata.name, currentMetadata);
     // console.log(`${clsCtor.name}.${currentMetadata.propertyKey}`);
 

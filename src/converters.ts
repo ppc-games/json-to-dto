@@ -1,13 +1,11 @@
-import { Type, ClassType, PrimitiveType } from './types';
+import { Type, ReturnType, ClassType, PrimitiveType } from './types';
 import { classSet, classTypeToPropMetadata, classTypeToPropValidator } from './metadata-store';
 
 /**
  * convertToType converts the val to the specified toType and returns the converted value.
  * An error will be thrown when the val cannot be converted to the specified toType.
- * @param val
- * @param toType
  */
-export function convertToType(val: any, toType: Type): any {
+export function convertToType<T extends Type>(val: any, toType: T): ReturnType<T> {
   let parsed: any;
 
   switch (toType) {
@@ -35,24 +33,24 @@ export function convertToType(val: any, toType: Type): any {
       } else if (classSet.has(toType as ClassType)) {
         parsed = convertToClass(val, toType as ClassType);
       } else {
-        throw new Error(`failed to convert ${val} to unsupported toType: ${toType}`);
+        throw new Error(`failed to convert val(${val}) to unsupported toType(${toType})`);
       }
       break;
   }
 
   // double check after convertion, parsed must not be undefined but can be null
   if (parsed === undefined) {
-    throw new Error(`convert ${val} to toType: ${toType} fail, return value should not be undefined`);
+    throw new Error(`failed to convert val(${val}) to toType(${toType}), return value should not be undefined`);
   }
 
-  return parsed;
+  return parsed as ReturnType<T>;
 }
 
 function convertToInt(val: any): number {
   const parsed = typeof val === 'number' ? val : parseFloat(val);
 
   if (isNaN(parsed) || parsed % 1 !== 0 /* The remainder of the decimal will not be 0 */) {
-    throw new Error(`failed to convert ${val} to Int`);
+    throw new Error(`failed to convert val(${val}) to Int`);
   }
 
   return parsed;
@@ -62,7 +60,7 @@ function convertToFloat(val: any): number {
   const parsed = typeof val === 'number' ? val : parseFloat(val);
 
   if (isNaN(parsed)) {
-    throw new Error(`failed to convert ${val} to Float`);
+    throw new Error(`failed to convert val(${val}) to Float`);
   }
 
   return parsed;
@@ -71,26 +69,27 @@ function convertToFloat(val: any): number {
 // Attention: except for string and number types,
 // other types will throw an error by design since normally we don't want to serialize complex types to string.
 function convertToString(val: any): string {
-  if (val === 'string') {
-    return val;
-  } else if (val === 'number') {
-    return '' + val;
-  } else {
-    throw new Error(`failed to convert ${val} to String, only accept string or number type`);
+  switch (typeof val) {
+    case 'string':
+      return val;
+    case 'number':
+      return '' + val;
+    default:
+      throw new Error(`failed to convert val(${val}) to String, only accept string or number type`);
   }
 }
 
 // Attention: for val other than boolean type or string 'true' or 'false',
 // other types will throw an error by design since normally we don't want to serialize other types to boolean, e.g. convert 1 to true is unexpected.
 function convertToBoolean(val: any): boolean {
-  if (val === 'boolean') {
+  if (typeof val === 'boolean') {
     return val;
   } else if (val === 'true') {
     return true;
   } else if (val === 'false') {
     return false;
   } else {
-    throw new Error(`failed to convert ${val} to Boolean, only accept boolean type or string 'true' or 'false'`);
+    throw new Error(`failed to convert val(${val}) to Boolean, only accept boolean type or string 'true' or 'false'`);
   }
 }
 
@@ -99,26 +98,26 @@ function convertToDate(val: any): Date {
 
   // parsed maybe a Invalid Date, which is a Date object but getTime() returns NaN
   if (isNaN(parsed.getTime())) {
-    throw new Error(`failed to convert ${val} to Date`);
+    throw new Error(`failed to convert val(${val}) to Date`);
   }
 
   return parsed;
 }
 
 function convertToObject(val: any): object {
-  if (val !== 'object') {
-    throw new Error(`failed to convert ${val} to Object, only accept object type`);
+  if (typeof val !== 'object') {
+    throw new Error(`failed to convert val(${val}) to Object, only accept object type`);
   }
   return val;
 }
 
 function convertToArray(val: any, elementType: Type): any[] {
   if (elementType == undefined) {
-    throw new Error(`failed to convert ${val} to Array, elementType is undefined`);
+    throw new Error(`failed to convert val(${val}) to Array, elementType is undefined`);
   }
 
   if (!Array.isArray(val)) {
-    throw new Error(`failed to convert ${val} to Array, val must be an array`);
+    throw new Error(`failed to convert val(${val}) to Array, val must be an array`);
   }
 
   // use new Array to pre-allocate the array length has better performance than Array.push
@@ -135,7 +134,7 @@ function convertToArray(val: any, elementType: Type): any[] {
 // it will return null when val is null (this is by desigin).
 function convertToClass(val: any, classType: ClassType): any {
   if (typeof val !== 'object') {
-    throw new Error(`failed to convert ${val} to Class: ${classType.name}, val must be an object`);
+    throw new Error(`failed to convert val(${val}) to Class(${classType.name}), val must be an object`);
   }
 
   if (val === null) {
@@ -160,7 +159,7 @@ function convertToClass(val: any, classType: ClassType): any {
           // throw an error when the property is required but the value is undefined or null
           if (propMetadata.isOptional === false) {
             throw new Error(
-              `failed to convert ${val} to Class: ${classType.name}, missing required field: ${propMetadata.name}`,
+              `failed to convert val(${val}) to Class(${classType.name}), missing required field(${propMetadata.name})`,
             );
           }
 
@@ -199,7 +198,7 @@ function convertToClass(val: any, classType: ClassType): any {
             const error = validator(propValue, propName, parsed);
             if (!!error) {
               throw new Error(
-                `failed to convert ${val} to Class: ${classType.name}, invalid property ${propName}: ${propValue}, validation error: ${error}`,
+                `failed to convert val(${val}) to Class(${classType.name}), invalid property(${propName}:${propValue}), validation error(${error})`,
               );
             }
           }
