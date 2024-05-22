@@ -1,13 +1,14 @@
-import { Class, Prop } from '../decorators';
-import { PrimitiveType } from '../types';
 import {
+  Class,
+  Prop,
+  PrimitiveType,
   NewValidatorMin,
   NewValidatorMinMax,
   NewValidatorStringNotEmpty,
   NewValidatorEnumValueExist,
   NewValidatorArrayNotEmpty,
   NewValidatorMax,
-} from '../validators';
+} from 'json-to-dto';
 
 export enum Relationship {
   TEAMMATE = 1,

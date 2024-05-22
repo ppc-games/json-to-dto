@@ -1,4 +1,4 @@
-import { convertToType } from '../converters';
+import { convertToType } from 'json-to-dto';
 
 describe('convertToType', () => {
   it('should convert a raw JSON object to an instance of the class registered with @Class', async () => {
