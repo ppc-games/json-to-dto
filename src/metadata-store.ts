@@ -11,11 +11,6 @@ export const classSet: Set<ClassType> = new Set();
 export const classTypeToPropMetadata: Map<ClassType, Map<string, PropMetadata>> = new Map();
 
 /**
- * propValidatorByClassType 是一个字典，key = 自定义类的构造函数，value = 对应类通过 @dto.Prop 注册的所有属性的 PropValidator 按照属性名索引的字典。
- * 注意：单个属性支持 1-N 个 PropValidator。
- */
-
-/**
  * classTypeToPropValidator is a map,
  * key = the constructor of the custom class,
  * value = a map of all the PropValidators of the properties registered by the @Prop of the corresponding class, indexed by property name.

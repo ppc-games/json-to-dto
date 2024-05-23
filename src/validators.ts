@@ -20,11 +20,6 @@ export function NewValidatorMinMax(min: number, max: number): PropValidator {
 }
 
 /**
- * NewValidatorEnumValueExist 创建一个 PropValidator，用于校验目标值 v 是否存在于传入的 enumDefine 枚举值中。
- * 注意：不支持字符串类型的枚举值，因为字符串类型的枚举，编译成 js 后不会生成按照值进行索引的字段。
- */
-
-/**
  * NewValidatorEnumValueExist creates a PropValidator that validates val exists in the enumDefine.
  * Attention: It does not support string type enum values,
  * because the string type enum will not generate fields indexed by value after being compiled into js.
@@ -35,11 +30,6 @@ export function NewValidatorEnumValueExist(enumDefine: { [key: string]: number |
       ? undefined
       : `validate prop:${name} fail, expect val:${val} exist in enum:${JSON.stringify(enumDefine)}`;
 }
-
-/**
- * NewValidatorStringNotEmpty 创建一个 PropValidator，用于校验目标值 v 不能是一个空字符串，
- * @param options.trim - 当传入 true 时，会先对校验目标值进行去除首尾空白字符的处理，然后再判断是否是一个空字符串。注意：该操作会修改原始值。
- */
 
 /**
  * NewValidatorStringNotEmpty creates a PropValidator that validates val is not an empty string.
