@@ -1,5 +1,8 @@
 # json-to-dto
 
+![Build Status](https://github.com/ppc-games/json-to-dto/actions/workflows/ci.yml/badge.svg)
+![Coverage Status](https://coveralls.io/repos/github/ppc-games/json-to-dto/badge.svg?branch=main)
+
 `json-to-dto` is a TypeScript library designed for efficiently transforming JSON objects into predefined classes annotated with `@Class` and `@Prop` decorators.
 
 During the conversion, it can discard properties not marked with `@Prop`, perform type conversion and validation on the marked properties, and set default values for missing properties.
