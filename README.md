@@ -395,4 +395,4 @@ console.log(equipment);
 
 ### Explore More Techniques
 
-Please refer to the `src/tests/convert-to-type.dto.ts` file for more advanced usage and techniques.
+Please refer to the [src/tests/convert-to-type.dto.ts](https://github.com/ppc-games/json-to-dto/blob/main/src/tests/convert-to-type.dto.ts) file for more advanced usage and techniques.
