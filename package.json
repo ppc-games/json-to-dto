@@ -1,6 +1,6 @@
 {
   "name": "json-to-dto",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A TypeScript library designed for efficiently transforming JSON objects into predefined classes annotated with `@Class` and `@Prop` decorators.",
   "main": "dist/index.js",
   "scripts": {
